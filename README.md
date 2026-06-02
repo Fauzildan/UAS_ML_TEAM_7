@@ -12,4 +12,6 @@ Dataset didapatkan dari
 ---------
 ## Hasil SVM
 
-|kolom| kolom
+|kolom|kolom|
+------------
+|row 1|row 1|
