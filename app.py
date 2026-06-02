@@ -13,19 +13,18 @@ from tensorflow.keras.applications import EfficientNetB0
 from tensorflow.keras.applications.efficientnet import preprocess_input
 from tensorflow.keras.models import Model
 
-# ─────────────────────────────────────────────
-# PAGE CONFIG
-# ─────────────────────────────────────────────
+
+#----------------- PAGE CONFIG
+
 st.set_page_config(
-    page_title="WasteVision | ADVANZ Team 7",
-    page_icon="♻️",
+    page_title="ADVANZ Team 7",
     layout="wide",
     initial_sidebar_state="collapsed"
 )
 
-# ─────────────────────────────────────────────
-# CUSTOM CSS
-# ─────────────────────────────────────────────
+
+#-------------------------Lay out
+
 st.markdown("""
 <style>
     @import url('https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&family=DM+Sans:wght@300;400;500;700&display=swap');
@@ -178,28 +177,9 @@ st.markdown("""
 </style>
 """, unsafe_allow_html=True)
 
-# ─────────────────────────────────────────────
-# WASTE HANDLING TIPS
-# ─────────────────────────────────────────────
-WASTE_TIPS = {
-    "cardboard": "Flatten and bundle before placing in recycling. Keep dry — wet cardboard is not recyclable.",
-    "glass":     "Rinse thoroughly and sort by color if required. Do not mix with ceramics or broken glass.",
-    "metal":     "Rinse cans and foil. Metal is infinitely recyclable — always separate from general waste.",
-    "paper":     "Keep dry and clean. Soiled or greasy paper (e.g. pizza boxes) goes to organic waste.",
-    "plastic":   "Check resin code (1–7). Compress bottles to save space. Avoid single-use when possible.",
-    "trash":     "General/residual waste. Minimize by reducing consumption and choosing recyclable packaging.",
-}
 
-def get_tip(class_name: str) -> str:
-    key = class_name.lower().strip()
-    for k, v in WASTE_TIPS.items():
-        if k in key:
-            return v
-    return "Consult your local waste management authority for proper disposal guidance."
 
-# ─────────────────────────────────────────────
-# MODEL LOADERS
-# ─────────────────────────────────────────────
+#--------------MODEL LOADERS
 @st.cache_resource(show_spinner="Loading EfficientNet-B0...")
 def load_extractor():
     base = EfficientNetB0(weights="imagenet", include_top=False, pooling="avg")
@@ -223,9 +203,9 @@ def load_xgboost():
 def load_class_names():
     return np.load("features/class_names.npy", allow_pickle=True).tolist()
 
-# ─────────────────────────────────────────────
-# INFERENCE PIPELINE
-# ─────────────────────────────────────────────
+
+#----------------------INFERENCE PIPELINE
+
 def preprocess_image(image: Image.Image) -> np.ndarray:
     img = image.convert("RGB").resize((224, 224))
     arr = np.array(img, dtype=np.float32)
@@ -259,17 +239,16 @@ def predict(image: Image.Image):
         "xgb_proba":   xgb_proba,
     }
 
-# ─────────────────────────────────────────────
-# UI — HEADER
-# ─────────────────────────────────────────────
-st.markdown('<div class="hero-title">♻️ WasteVision</div>', unsafe_allow_html=True)
+#------------------------------UI — HEADER
+
+
 st.markdown('<div class="hero-sub">Image-based waste classification · EfficientNet-B0 + SVM & XGBoost</div>', unsafe_allow_html=True)
 st.markdown('<div class="team-badge">ADVANZ · TEAM 7 · UNESA</div>', unsafe_allow_html=True)
 st.markdown('<hr class="divider">', unsafe_allow_html=True)
 
-# ─────────────────────────────────────────────
-# UI — LAYOUT
-# ─────────────────────────────────────────────
+
+#------------------------------------UI — LAYOUT
+
 col_left, col_right = st.columns([1, 1.4], gap="large")
 
 with col_left:
@@ -286,7 +265,7 @@ with col_left:
         classify_btn = st.button("🔍 Classify Waste")
     else:
         st.markdown(
-            '<div class="upload-zone">📂 Drag & drop or browse<br><small style="color:#555">JPG · JPEG · PNG</small></div>',
+            '<div class="upload-zone"> Drag & drop or browse<br><small style="color:#555">JPG · JPEG · PNG</small></div>',
             unsafe_allow_html=True
         )
         classify_btn = False
@@ -334,9 +313,9 @@ with col_right:
 
         # ── Agreement badge ──
         if agree:
-            st.markdown(f'<div class="badge-agree">✅ Both models agree → {svm_class.upper()}</div>', unsafe_allow_html=True)
+            st.markdown(f'<div class="badge-agree"> Both models agree → {svm_class.upper()}</div>', unsafe_allow_html=True)
         else:
-            st.markdown(f'<div class="badge-disagree">⚠️ Models disagree — review image quality</div>', unsafe_allow_html=True)
+            st.markdown(f'<div class="badge-disagree"> Models disagree — review image quality</div>', unsafe_allow_html=True)
 
         # ── Probability chart ──
         st.markdown("#### Confidence per Class")
@@ -373,15 +352,6 @@ with col_right:
         )
         st.plotly_chart(fig, use_container_width=True)
 
-        # ── Handling tip ──
-        final_class = svm_class if agree else xgb_class
-        tip = get_tip(final_class)
-        st.markdown(f"""
-        <div class="tip-card">
-            <div class="tip-label">♻️ Handling Tip</div>
-            <div class="tip-text">{tip}</div>
-        </div>
-        """, unsafe_allow_html=True)
 
     elif not uploaded:
         st.markdown("""
