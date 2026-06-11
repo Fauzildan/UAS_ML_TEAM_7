@@ -10,13 +10,13 @@
 
 ---
 
-## 📌 Deskripsi Proyek
+##  Deskripsi Proyek
 
 Volume sampah perkotaan di Indonesia meningkat signifikan, namun pemilahan sampah secara manual tidak efisien dan kapasitas TPA semakin terbatas. Repository ini mengimplementasikan pipeline klasifikasi sampah berbasis citra menggunakan **EfficientNet-B0 sebagai feature extractor** yang dikombinasikan dengan dua classifier tradisional (**SVM** dan **XGBoost**) untuk membandingkan performa keduanya pada dataset 10 kelas sampah.
 
 ---
 
-## 👥 Tim ADVANZ — Team 7
+##  Tim ADVANZ — Team 7
 
 | Nama | NIM |
 |------|-----|
@@ -26,7 +26,7 @@ Volume sampah perkotaan di Indonesia meningkat signifikan, namun pemilahan sampa
 
 ---
 
-## 📂 Struktur Repository
+##  Struktur Repository
 
 ```
 UAS_ML_TEAM_7/
@@ -62,7 +62,8 @@ UAS_ML_TEAM_7/
 
 ---
 
-## 🗃️ Dataset
+##  Dataset
+![Distribusi Kelas](gambar/distribusi_kelas.png)
 
 - **Sumber:** [Garbage Classification V2 — Kaggle](https://www.kaggle.com/datasets/sumn2u/garbage-classification-v2)
 - **Total Gambar:** 13.909 (train: 11.457 · test: 2.452)
@@ -78,11 +79,9 @@ UAS_ML_TEAM_7/
 | 2 | biological | 7 | paper |
 | 3 | cardboard | 8 | plastic |
 | 4 | clothes | 9 | shoes |
-| 5 | glass | 10 | **trash** ⚠️ |
+| 5 | glass | 10 | **trash**  |
 
-> ⚠️ Kelas `trash` secara konsisten menunjukkan performa terendah pada kedua model karena bersifat heterogen (tidak memiliki ciri visual yang dominan).
-
-![Distribusi Kelas](gambar/distribusi_kelas.png)
+>  Kelas `trash` secara konsisten menunjukkan performa terendah pada kedua model karena bersifat heterogen (tidak memiliki ciri visual yang dominan).
 
 ---
 
@@ -117,7 +116,7 @@ Input Gambar (224×224 RGB)
 
 ---
 
-## 📊 Hasil & Evaluasi
+##  Hasil & Evaluasi
 
 ### Perbandingan Model
 
@@ -184,16 +183,5 @@ python "Model Train/XGBoost.py"
 ```bash
 streamlit run app.py
 ```
----
 
-##  Referensi
-
-- Tan, M., & Le, Q. V. (2019). EfficientNet: Rethinking model scaling for convolutional neural networks. *Proceedings of the 36th International Conference on Machine Learning (ICML)*, 97, 6105–6114.
-- Cortes, C., & Vapnik, V. (1995). Support-vector networks. *Machine Learning*, 20(3), 273–297. https://doi.org/10.1007/BF00994018
-- Chen, T., & Guestrin, C. (2016). XGBoost: A scalable tree boosting system. *Proceedings of the 22nd ACM SIGKDD International Conference on Knowledge Discovery and Data Mining*, 785–794. https://doi.org/10.1145/2939672.2939785
-- Kementerian Lingkungan Hidup dan Kehutanan Republik Indonesia. (2023). *Laporan Kinerja Pengelolaan Sampah Nasional*. KLHK.
-- S. K. Rath, M. Samantaray, dan T. Rout. (2022). Garbage classification using deep learning: A comparative study. *International Journal of Advanced Computer Science and Applications*, 13(4).
-
----
-
-*Repository ini merupakan bagian dari tugas akhir mata kuliah Machine Learning, Program Studi Pendidikan Teknologi Informasi, Universitas Negeri Surabaya.*
+*Repository ini merupakan bagian dari tugas akhir mata kuliah Machine Learning, Program Studi Sains Data, Universitas Negeri Surabaya.*
